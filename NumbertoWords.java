@@ -1,91 +1,100 @@
 package Assignment_3;
 
-public class NumbertoWords {
-
-	static void convertTowords(char[] num){
-		int len = num.length;
+public class NumberToWords{
+	
+	static void NumberToWords(int num){
+		String [] ones = {"","one","two","three","four","five","six","seven","eight","nine"};
+		String [] elevenToNineteen = {"ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"};
+		String [] tens = {"twenty","thirty","fourty","fifty","sixty","seventy","eighty","ninety"};
+		String [] hundreds = {"hundred","thousand"};
 		
-		if (len == 0){
-			System.out.println("empty string");
-			return;
+		int digit1 = num%10;int num2 =num/10;
+		int digit2 = num2%10;int num3 =num2/10;
+		int digit3 = num3%10;int num4 =num3/10;
+		int digit4 = num4%10;
+		
+//		System.out.println(digit1);
+//		System.out.println(digit2);
+//		System.out.println(digit3);
+//		System.out.println(digit4);
+		
+		int x = num%100;
+//		System.out.println("digit3 : "+ digit3 );
+		
+		String	nums =Integer.toString(num);
+		//System.out.println("Number lenth is :"+nums.length());
+		// 1 to 9
+		if(nums.length()==1){
+			System.out.println(ones[digit1]);
 		}
-		if(len>4){
-		   System.out.println("Length more than 4 is not supported");
-		   return;
-		}
-		String [] single_digits = new String[]{
-				"zero","one","two","three","four","five","six","seven","eight","nine"	};
-		
-		String [] two_digits = new String[]{
-				"","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"};
-		
-		String [] ten_multiple = new String[]{
-				"","","twenty","thirty","fourty","fifty","sixty","seventy","eighty","ninety",	};
-		
-		String [] tens_power = new String[]{
-				"hundreds","thousands",	};
-		if (len == 1)
-		{
-			System.out.println(single_digits[num[0]-'0']);
-			return;
-		}
-		
-		int x=0;
-		while(x < num.length)
-		{
-			if (len >=3)
-			{
-				if(num[x] -'0' !=0)
-				{
-					System.out.println(single_digits[num[x]-'0'] + " ");
-					System.out.println(tens_power[len - 3] + " ");
-				}
-				--len;
+		// 10 to 99
+		else if(nums.length()==2){
+			//10 to 19
+			if(num>=10 && num <=19){
+				System.out.println(elevenToNineteen[digit1]);
 			}
-			else
-			{
-				if(num[x] - '0' == 1)
-				{
-					int sum = num[x] - '0'+ num[x+1] - '0';
-					System.out.println(two_digits[sum]);
-					return;
-				}
-				
-			 
-			    else if (num[x] - '0' == 2 && num[x +1] - '0' == 0  )
-			      {
-					System.out.println("twenty");
-					return;
-			     }
-				
-			    else
-			   {
-					int i = (num[x] - '0');
-					if(i>0)
-					{
-						System.out.println(ten_multiple[i] + " ");
-			        }
-					else 
-					
-						System.out.println(" ");
-					++x;
-					
-					if (num[x] - '0' != 0)
-					{
-						System.out.println(single_digits[num[x]-'0']);
-					}
-				}
-				++x;
+			// 20 to 99
+			else if (num>=20 && num<=99){
+				System.out.println(tens[digit2-2]+" "+ones[digit1]);
 			}
 		}
-	}
-	
 		
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		convertTowords("1000".toCharArray());
-
+		// 100 to 999
+		else if(nums.length()==3){
+			if(x>=10&&x<=19){
+				
+				System.out.println(ones[digit3]+" "+hundreds[0]+" and "+elevenToNineteen[digit1]);
+			}
+			//100 to 109 Nd 200 t0 209 -----
+			else if(digit2==0){
+				System.out.println(ones[digit3]+" "+hundreds[0]+" "+ones[digit1]);
+			}
+			else{
+				System.out.println(ones[digit3]+" "+hundreds[0]+" "+tens[digit2-2]+"  "+ones[digit1]);
+			}
+		}
+		// 1000 to 9999 
+		else if(nums.length()==4){
+			if(x>=10&&x<=19){
+				
+				System.out.println(ones[digit4]+" "+hundreds[1]+" "+ones[digit3]+" "+hundreds[0]+" and "+elevenToNineteen[digit1]);
+			}
+			//1006,1008,2008--- NUMBERS AND 1106 ,1206,13406,3609--- numbers
+			else if (digit2==0 ||digit3==0){
+				
+				if(digit2==0 &&digit3!=0){
+				    System.out.println(ones[digit4]+" "+hundreds[1]+" "+ones[digit3]+" "+hundreds[0]+" and "+ones[digit1]);
+				 }
+				else if (digit3==0&&digit2==0){
+					
+					
+					System.out.println(ones[digit4]+" "+hundreds[1]+" "+ones[digit3]+" "+ones[digit1]);
+				}
+			}
+			else{
+				
+				System.out.println(ones[digit4]+" "+hundreds[1]+" "+ones[digit3]+" "+hundreds[0]+" and "+tens[digit2-2]+" "+ones[digit1]);
+			}
+			
+			
+		}
+		else{
+			System.out.println("please enter valid number below 10,000");
+		}
+		
+		
+		}
+		
+	public static void main(String[] args){
+		NumberToWords(1564);
+		NumberToWords(9999);
+		NumberToWords(125);
+		NumberToWords(2005);
+		NumberToWords(9);
+		NumberToWords(25);
+		
+		
+		
+		
 	}
-
 }
